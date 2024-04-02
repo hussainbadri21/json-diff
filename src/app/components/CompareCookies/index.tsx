@@ -15,7 +15,8 @@ const CompareCookies = ({ aValue, bValue }: { aValue: string, bValue: string }) 
     }
 
 
-    const isCookieEqual = (a: Cookie, b: Cookie) => a.name === b.name && a.value === b.value;
+    const isCookieEqual = (a: Cookie, b: Cookie) => a.name === b.name;
+    const isCookieEqualValue = (a: Cookie, b: Cookie) => a.name === b.name && a.value === b.value;
 
 
     const onlyInLeft = (left: Cookie[], right: Cookie[], compareFunction: (a: Cookie, b: Cookie) => boolean) =>
@@ -28,7 +29,11 @@ const CompareCookies = ({ aValue, bValue }: { aValue: string, bValue: string }) 
 
     const commonCookie = aCookies.filter((aCookie: Cookie) =>
         bCookies.some((bCookie: Cookie) =>
-            isCookieEqual(aCookie, bCookie)));
+            isCookieEqualValue(aCookie, bCookie)));
+
+    const commonCookieWithDifferentValues = aCookies.filter((aCookie: Cookie) =>
+        bCookies.some((bCookie: Cookie) =>
+            aCookie.name === bCookie.name && aCookie.value !== bCookie.value));
 
     return (
         <>
@@ -59,6 +64,19 @@ const CompareCookies = ({ aValue, bValue }: { aValue: string, bValue: string }) 
                         <div className='border-2' key={cookie.name}>
                             <div className="px-2 "> {cookie.name} </div>
                             <div className="px-2 break-words"> {cookie.value} </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            <div className="mt-16 flex flex-row justify-center">
+                <div className="w-3/4">
+                    <h1 className="text-2xl font-bold text-center">Common Cookies with different values</h1>
+                    {commonCookieWithDifferentValues.map((cookie: Cookie) =>
+                        <div className='border-2' key={cookie.name}>
+                            <div className="px-2 "> {cookie.name} </div>
+                            <div className="px-2 break-words"> A Bucket : {cookie.value} </div>
+                            <div className="px-2 break-words"> B Bucket :  {bCookies.find((bCookie: Cookie) => bCookie.name === cookie.name).value} </div>
                         </div>
                     )}
                 </div>
