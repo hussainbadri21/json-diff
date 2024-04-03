@@ -1,3 +1,5 @@
+import { list } from "@/app/constants/cookieList";
+
 const CompareCookies = ({ aValue, bValue }: { aValue: string, bValue: string }) => {
     let aCookies = []
     let bCookies = []
@@ -37,7 +39,7 @@ const CompareCookies = ({ aValue, bValue }: { aValue: string, bValue: string }) 
 
     return (
         <>
-            <div className="flex flex-row mt-8">
+            <div className="flex flex-row mt-8 px-8">
                 <div className="w-1/2">
                     <h1 className="text-2xl font-bold text-center">A Bucket</h1>
                     {aCookies.map((cookie: Cookie) =>
@@ -61,7 +63,7 @@ const CompareCookies = ({ aValue, bValue }: { aValue: string, bValue: string }) 
                 <div className="w-3/4">
                     <h1 className="text-2xl font-bold text-center">Common Cookies</h1>
                     {commonCookie.map((cookie: Cookie) =>
-                        <div className='border-2' key={cookie.name}>
+                        <div className='border-2 font-bold' key={cookie.name}>
                             <div className="px-2 "> {cookie.name} </div>
                             <div className="px-2 break-words"> {cookie.value} </div>
                         </div>
@@ -73,7 +75,7 @@ const CompareCookies = ({ aValue, bValue }: { aValue: string, bValue: string }) 
                 <div className="w-3/4">
                     <h1 className="text-2xl font-bold text-center">Common Cookies with different values</h1>
                     {commonCookieWithDifferentValues.map((cookie: Cookie) =>
-                        <div className='border-2' key={cookie.name}>
+                        <div className={`border-2 font-bold ${list[list.findIndex(c => c.cookies.includes(cookie.name))]?.color ?? 'text-red-900'}`} key={cookie.name}>
                             <div className="px-2 "> {cookie.name} </div>
                             <div className="px-2 break-words"> A Bucket : {cookie.value} </div>
                             <div className="px-2 break-words"> B Bucket :  {bCookies.find((bCookie: Cookie) => bCookie.name === cookie.name).value} </div>
@@ -86,7 +88,7 @@ const CompareCookies = ({ aValue, bValue }: { aValue: string, bValue: string }) 
                 <div className="w-1/2">
                     <h1 className="text-2xl font-bold text-center">Only in A Bucket</h1>
                     {onlyInA.map((cookie: Cookie) =>
-                        <div className='border-2' key={cookie.name}>
+                        <div className={`border-2 font-bold ${list[list.findIndex(c => c.cookies.includes(cookie.name))]?.color ?? 'text-red-900'}`} key={cookie.name}>
                             <div className="px-2 "> {cookie.name} </div>
                             <div className="px-2 break-words"> {cookie.value} </div>
                         </div>
@@ -95,7 +97,7 @@ const CompareCookies = ({ aValue, bValue }: { aValue: string, bValue: string }) 
                 <div className="w-1/2">
                     <h1 className="text-2xl font-bold text-center">Only in B Bucket</h1>
                     {onlyInB.map((cookie: Cookie) =>
-                        <div className='border-2' key={cookie.name}>
+                        <div className='border-2 font-bold' key={cookie.name}>
                             <div className="px-2 "> {cookie.name} </div>
                             <div className="px-2 break-words"> {cookie.value} </div>
                         </div>
